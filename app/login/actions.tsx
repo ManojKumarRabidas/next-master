@@ -2,6 +2,7 @@
 'use server';
 
 import { signIn } from "@/auth";
+import { AuthError } from "next-auth";
 
 export async function loginAction(formData: FormData) {
     try {
@@ -12,16 +13,14 @@ export async function loginAction(formData: FormData) {
             redirectTo: "/dashboard", // Where to go after a successful login
         });
     } catch (error) {
-        if (error instanceof Error) {
-            // We check the specific error message from Auth.js
-            if (error.message === "CredentialsSignin") {
-                return "Invalid email or password. Please try again.";
+        if (error instanceof AuthError) {
+            switch (error.type) {
+                case "CredentialsSignin":
+                    return "Invalid credentials.";
+                default:
+                    return "Something went wrong.";
             }
-            return "Something went wrong. Please try again later.";
         }
-
-        // IMPORTANT: Re-throw the error if it's not an AuthError
-        // This allows Next.js to handle the redirect properly
-        throw error; // Essential for Next.js redirects to work
+        throw error;
     }
 }

@@ -31,6 +31,7 @@ async function connectDB() {
     }
 
     cached.conn = await cached.promise;
+    console.log("🐘 New MongoDB Connection Established");
     return cached.conn;
 }
 

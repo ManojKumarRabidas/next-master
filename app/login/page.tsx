@@ -3,13 +3,12 @@ import { useActionState } from "react";
 import { loginAction } from "./actions";
 
 export default function LoginPage() {
-    const [errorMessage, formAction, isPending] = useActionState(loginAction as any, undefined);
     return (
         <div className="flex flex-col items-center justify-center min-h-[70vh]">
             <div className="w-full max-w-md p-8 bg-white border rounded-2xl shadow-xl">
                 <h1 className="text-3xl font-extrabold text-center mb-6">Welcome Back</h1>
 
-                <form action={formAction} className="space-y-4">
+                <form action={loginAction} className="space-y-4">
                     <div>
                         <label className="block text-sm font-semibold mb-1">Email Address</label>
                         <input
